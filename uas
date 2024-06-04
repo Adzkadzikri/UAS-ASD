@@ -110,3 +110,15 @@ while (true) {
 
             tepiList.add(new Tepi(jarakMinimum, idx1, idx2));
         }
+Collections.sort(tepiList);
+        DisjointSet ds = new DisjointSet(N);
+        double totalPanjang = 0.0;
+
+        for (Tepi t : tepiList) {
+            if (ds.find(t.u) != ds.find(t.v)) {
+                ds.union(t.u, t.v);
+                totalPanjang += t.berat;
+            }
+        }
+        hasil.add(totalPanjang);
+    }
