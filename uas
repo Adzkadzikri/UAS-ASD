@@ -3,7 +3,7 @@ import java.io.*;
 
 class Main {
 
-    // Kelas untuk merepresentasikan lokasi dengan koordinat x dan y
+
     static class Lokasi {
         int x, y;
 
@@ -12,3 +12,17 @@ class Main {
             this.y = y;
         }
     }
+static class Tepi implements Comparable<Tepi> {
+    double berat;
+    int u, v;
+
+    Tepi(double berat, int u, int v) {
+        this.berat = berat;
+        this.u = u;
+        this.v = v;
+    }
+
+    public int compareTo(Tepi lain) {
+        return Double.compare(this.berat, lain.berat);
+    }
+}
