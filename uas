@@ -1,0 +1,14 @@
+import java.util.*;
+import java.io.*;
+
+class Main {
+
+    // Kelas untuk merepresentasikan lokasi dengan koordinat x dan y
+    static class Lokasi {
+        int x, y;
+
+        Lokasi(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+    }
