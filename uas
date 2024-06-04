@@ -89,3 +89,24 @@ while (true) {
             namaKotaList.add(kota);
             indeksKota.put(kota, indeks++);
         }
+
+ List<Tepi> tepiList = new ArrayList<>();
+        for (int i = 0; i < N - 1; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine().trim());
+            String kota1 = st.nextToken();
+            String kota2 = st.nextToken();
+            int idx1 = indeksKota.get(kota1);
+            int idx2 = indeksKota.get(kota2);
+            double jarakMinimum = Double.MAX_VALUE;
+
+            for (Lokasi loc1 : lokasiKota.get(kota1)) {
+                for (Lokasi loc2 : lokasiKota.get(kota2)) {
+                    double jarak = Math.sqrt(Math.pow(loc1.x - loc2.x, 2) + Math.pow(loc1.y - loc2.y, 2));
+                    if (jarak < jarakMinimum) {
+                        jarakMinimum = jarak;
+                    }
+                }
+            }
+
+            tepiList.add(new Tepi(jarakMinimum, idx1, idx2));
+        }
