@@ -110,6 +110,7 @@ while (true) {
 
             tepiList.add(new Tepi(jarakMinimum, idx1, idx2));
         }
+
 Collections.sort(tepiList);
         DisjointSet ds = new DisjointSet(N);
         double totalPanjang = 0.0;
@@ -122,3 +123,7 @@ Collections.sort(tepiList);
         }
         hasil.add(totalPanjang);
     }
+    for (double panjang : hasil) {
+        System.out.printf("%.1f\n", panjang);
+    }
+}
