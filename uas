@@ -64,3 +64,12 @@ static class DisjointSet {
 public static void main(String[] args) throws IOException {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     List<Double> hasil = new ArrayList<>();
+
+while (true) {
+        int N = Integer.parseInt(br.readLine().trim());
+        if (N == 0) break; // Berhenti jika input adalah 0
+
+        Map<String, List<Lokasi>> lokasiKota = new HashMap<>();
+        List<String> namaKotaList = new ArrayList<>();
+        Map<String, Integer> indeksKota = new HashMap<>();
+        int indeks = 0;
