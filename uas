@@ -73,3 +73,19 @@ while (true) {
         List<String> namaKotaList = new ArrayList<>();
         Map<String, Integer> indeksKota = new HashMap<>();
         int indeks = 0;
+
+        for (int i = 0; i < N; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine().trim());
+            String kota = st.nextToken();
+            int Ci = Integer.parseInt(st.nextToken());
+            List<Lokasi> lokasi = new ArrayList<>();
+            for (int j = 0; j < Ci; j++) {
+                st = new StringTokenizer(br.readLine().trim());
+                int x = Integer.parseInt(st.nextToken());
+                int y = Integer.parseInt(st.nextToken());
+                lokasi.add(new Lokasi(x, y));
+            }
+            lokasiKota.put(kota, lokasi);
+            namaKotaList.add(kota);
+            indeksKota.put(kota, indeks++);
+        }
