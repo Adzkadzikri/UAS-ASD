@@ -11,121 +11,124 @@ class Main {
             this.y = y;
         }
     }
-static class Tepi implements Comparable<Tepi> {
-    double berat;
-    int u, v;
 
-    Tepi(double berat, int u, int v) {
-        this.berat = berat;
-        this.u = u;
-        this.v = v;
-    }
+    static class Tepi implements Comparable<Tepi> {
+        double berat;
+        int u, v;
 
-    public int compareTo(Tepi lain) {
-        return Double.compare(this.berat, lain.berat);
-    }
+        Tepi(double berat, int u, int v) {
+            this.berat = berat;
+            this.u = u;
+            this.v = v;
+        }
 
-}
-static class DisjointSet {
-    int[] induk, peringkat;
-
-    DisjointSet(int n) {
-        induk = new int[n];
-        peringkat = new int[n];
-        for (int i = 0; i < n; i++) {
-            induk[i] = i;
-            peringkat[i] = 0;
+        public int compareTo(Tepi lain) {
+            return Double.compare(this.berat, lain.berat);
         }
     }
 
-    int find(int u) {
-        if (u != induk[u]) {
-            induk[u] = find(induk[u]);
+    static class DisjointSet {
+        int[] induk, peringkat;
+
+        DisjointSet(int n) {
+            induk = new int[n];
+            peringkat = new int[n];
+            for (int i = 0; i < n; i++) {
+                induk[i] = i;
+                peringkat[i] = 0;
+            }
         }
-        return induk[u];
-    }
 
-    void union(int u, int v) {
-        int rootU = find(u);
-        int rootV = find(v);
-        if (rootU != rootV) {
-            if (peringkat[rootU] > peringkat[rootV]) {
-                induk[rootV] = rootU;
-            } else if (peringkat[rootU] < peringkat[rootV]) {
-                induk[rootU] = rootV;
-            } else {
-                induk[rootV] = rootU;
-                peringkat[rootU]++;
+        int find(int u) {
+            if (u != induk[u]) {
+                induk[u] = find(induk[u]);
             }
-        }
-    }
-}
+            return induk[u];
+        }
 
-public static void main(String[] args) throws IOException {
-    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    List<Double> hasil = new ArrayList<>();
 
-    while (true) {
-        int N = Integer.parseInt(br.readLine().trim());
-        if (N == 0) break; // Berhenti jika input adalah 0
-
-        Map<String, List<Lokasi>> lokasiKota = new HashMap<>();
-        List<String> namaKotaList = new ArrayList<>();
-        Map<String, Integer> indeksKota = new HashMap<>();
-        int indeks = 0;
-
-        for (int i = 0; i < N; i++) {
-            StringTokenizer st = new StringTokenizer(br.readLine().trim());
-            String kota = st.nextToken();
-            int Ci = Integer.parseInt(st.nextToken());
-            List<Lokasi> lokasi = new ArrayList<>();
-            for (int j = 0; j < Ci; j++) {
-                st = new StringTokenizer(br.readLine().trim());
-                int x = Integer.parseInt(st.nextToken());
-                int y = Integer.parseInt(st.nextToken());
-                lokasi.add(new Lokasi(x, y));
-            }
-            lokasiKota.put(kota, lokasi);
-            namaKotaList.add(kota);
-            indeksKota.put(kota, indeks++);
-        }
-
-        List<Tepi> tepiList = new ArrayList<>();
-        for (int i = 0; i < N - 1; i++) {
-            StringTokenizer st = new StringTokenizer(br.readLine().trim());
-            String kota1 = st.nextToken();
-            String kota2 = st.nextToken();
-            int idx1 = indeksKota.get(kota1);
-            int idx2 = indeksKota.get(kota2);
-            double jarakMinimum = Double.MAX_VALUE;
-
-            for (Lokasi loc1 : lokasiKota.get(kota1)) {
-                for (Lokasi loc2 : lokasiKota.get(kota2)) {
-                    double jarak = Math.sqrt(Math.pow(loc1.x - loc2.x, 2) + Math.pow(loc1.y - loc2.y, 2));
-                    if (jarak < jarakMinimum) {
-                        jarakMinimum = jarak;
-                    }
+        void union(int u, int v) {
+            int rootU = find(u);
+            int rootV = find(v);
+            if (rootU != rootV) {
+                if (peringkat[rootU] > peringkat[rootV]) {
+                    induk[rootV] = rootU;
+                } else if (peringkat[rootU] < peringkat[rootV]) {
+                    induk[rootU] = rootV;
+                } else {
+                    induk[rootV] = rootU;
+                    peringkat[rootU]++;
                 }
             }
-
-            tepiList.add(new Tepi(jarakMinimum, idx1, idx2));
         }
+    }
 
-        Collections.sort(tepiList);
-        DisjointSet ds = new DisjointSet(N);
-        double totalPanjang = 0.0;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        List<Double> hasil = new ArrayList<>();
 
-        for (Tepi t : tepiList) {
-            if (ds.find(t.u) != ds.find(t.v)) {
-                ds.union(t.u, t.v);
-                totalPanjang += t.berat;
+        while (true) {
+            int N = Integer.parseInt(br.readLine().trim());
+            if (N == 0) break; // Berhenti jika input adalah 0
+
+            Map<String, List<Lokasi>> lokasiKota = new HashMap<>();
+            List<String> namaKotaList = new ArrayList<>();
+            Map<String, Integer> indeksKota = new HashMap<>();
+            int indeks = 0;
+
+            for (int i = 0; i < N; i++) {
+                StringTokenizer st = new StringTokenizer(br.readLine().trim());
+                String kota = st.nextToken();
+                int Ci = Integer.parseInt(st.nextToken());
+                List<Lokasi> lokasi = new ArrayList<>();
+                for (int j = 0; j < Ci; j++) {
+                    st = new StringTokenizer(br.readLine().trim());
+                    int x = Integer.parseInt(st.nextToken());
+                    int y = Integer.parseInt(st.nextToken());
+                    lokasi.add(new Lokasi(x, y));
+                }
+                lokasiKota.put(kota, lokasi);
+                namaKotaList.add(kota);
+                indeksKota.put(kota, indeks++);
             }
-        }
-        hasil.add(totalPanjang);
-    }
 
-    for (double panjang : hasil) {
-        System.out.printf("%.1f\n", panjang);
-        }
+            List<Tepi> tepiList = new ArrayList<>();
+
+            for (int i = 0; i < N - 1; i++) {
+                StringTokenizer st = new StringTokenizer(br.readLine().trim());
+                String kota1 = st.nextToken();
+                String kota2 = st.nextToken();
+                int idx1 = indeksKota.get(kota1);
+                int idx2 = indeksKota.get(kota2);
+                double jarakMinimum = Double.MAX_VALUE;
+
+                for (Lokasi loc1 : lokasiKota.get(kota1)) {
+                    for (Lokasi loc2 : lokasiKota.get(kota2)) {
+                        double jarak = Math.sqrt(Math.pow(loc1.x - loc2.x, 2) + Math.pow(loc1.y - loc2.y, 2));
+                        if (jarak < jarakMinimum) {
+                            jarakMinimum = jarak;
+                        }
+                    }
+                }
+
+                tepiList.add(new Tepi(jarakMinimum, idx1, idx2));
+            }
+
+            Collections.sort(tepiList);
+            DisjointSet ds = new DisjointSet(N);
+            double totalPanjang = 0.0;
+
+            for (Tepi t : tepiList) {
+                if (ds.find(t.u) != ds.find(t.v)) {
+                    ds.union(t.u, t.v);
+                    totalPanjang += t.berat;
+                }
+            }
+            hasil.add(totalPanjang);
+        }
+
+        for (double panjang : hasil) {
+            System.out.printf("%.1f\n", panjang);
+        }
     }
 }
