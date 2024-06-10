@@ -3,7 +3,6 @@ import java.io.*;
 
 class Main {
 
-
     static class Lokasi {
         int x, y;
 
@@ -39,14 +38,14 @@ static class DisjointSet {
         }
     }
 
-  
     int find(int u) {
         if (u != induk[u]) {
             induk[u] = find(induk[u]);
         }
         return induk[u];
     }
-  void union(int u, int v) {
+
+    void union(int u, int v) {
         int rootU = find(u);
         int rootV = find(v);
         if (rootU != rootV) {
@@ -61,11 +60,12 @@ static class DisjointSet {
         }
     }
 }
+
 public static void main(String[] args) throws IOException {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     List<Double> hasil = new ArrayList<>();
 
-while (true) {
+    while (true) {
         int N = Integer.parseInt(br.readLine().trim());
         if (N == 0) break; // Berhenti jika input adalah 0
 
@@ -90,7 +90,7 @@ while (true) {
             indeksKota.put(kota, indeks++);
         }
 
- List<Tepi> tepiList = new ArrayList<>();
+        List<Tepi> tepiList = new ArrayList<>();
         for (int i = 0; i < N - 1; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine().trim());
             String kota1 = st.nextToken();
@@ -111,7 +111,7 @@ while (true) {
             tepiList.add(new Tepi(jarakMinimum, idx1, idx2));
         }
 
-Collections.sort(tepiList);
+        Collections.sort(tepiList);
         DisjointSet ds = new DisjointSet(N);
         double totalPanjang = 0.0;
 
@@ -123,7 +123,9 @@ Collections.sort(tepiList);
         }
         hasil.add(totalPanjang);
     }
+
     for (double panjang : hasil) {
         System.out.printf("%.1f\n", panjang);
-    }
+        }
+    }
 }
